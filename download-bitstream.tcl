@@ -1,4 +1,10 @@
-# download-bitstream.tcl
+set BITFILE [lindex $argv 0]
+
+if {$BITFILE eq ""} {
+    puts "ERROR: No bitfile argument passed"
+    exit 1
+}
+
 if {![info exists BITFILE]} {
     puts "ERROR: BITFILE not provided"
     exit 1
