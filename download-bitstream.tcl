@@ -1,17 +1,15 @@
-# Open the hardware manager
-open_hw_manager
+# download-bitstream.tcl
+if {![info exists BITFILE]} {
+    puts "ERROR: BITFILE not provided"
+    exit 1
+}
 
-# Auto-connect to the local hardware server and target
+open_hw
 connect_hw_server
 open_hw_target
 
-# Get the first hardware device found (adjust if you have multiple devices)
-set hw_device [lindex [get_hw_devices] 0]
+current_hw_device [lindex [get_hw_devices] 0]
+refresh_hw_device -update_hw_probes false $current_hw_device
 
-# Specify bitstream file
-set_property PROGRAM.FILE {<path/to/<project_name>.bit} $hw_device
-
-# Program the hardware device with the generated bitstream file
-program_hw_devices $hw_device
-
-
+set_property PROGRAM.FILE $BITFILE $current_hw_device
+program_hw_devices $current_hw_device
